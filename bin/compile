@@ -18,8 +18,9 @@ curl -L --silent $DOWNLOAD_URL | tar xj --strip-components=1
 make | indent
 make install | indent
 
-
+#disable 'will cite'
+echo will cite|$BUILD_DIR/$VENDOR_DIR/parallel/bin/parallel --citation
 echo "exporting PATH" | indent
 PROFILE_PATH="$BUILD_DIR/.profile.d/parallel.sh"
 mkdir -p $(dirname $PROFILE_PATH)
-echo 'export PATH="$PATH:${HOME}/vendor/parallel"' >> $PROFILE_PATH
+echo 'export PATH="$PATH:${HOME}/vendor/parallel/bin"' >> $PROFILE_PATH
