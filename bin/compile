@@ -6,20 +6,21 @@ indent() {
 
 echo "-----> Install parallel"
 BUILD_DIR=$1
-VENDOR_DIR="vendor"
+VENDOR_DIR="vendor/parallel"
 DOWNLOAD_URL="http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2"
 
 echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
 
 cd $BUILD_DIR
-mkdir -p $VENDOR_DIR/parallel
+mkdir -p $VENDOR_DIR
+cd $VENDOR_DIR
 curl -L --silent $DOWNLOAD_URL | tar xj --strip-components=1
-./configure --prefix=$BUILD_DIR/$VENDOR_DIR/parallel | indent
+./configure --prefix=$BUILD_DIR/$VENDOR_DIR | indent
 make | indent
 make install | indent
 
 #disable 'will cite'
-echo will cite|$BUILD_DIR/$VENDOR_DIR/parallel/bin/parallel --citation
+echo will cite|$BUILD_DIR/$VENDOR_DIR/bin/parallel --citation > /dev/null 2>&1
 echo "exporting PATH" | indent
 PROFILE_PATH="$BUILD_DIR/.profile.d/parallel.sh"
 mkdir -p $(dirname $PROFILE_PATH)
