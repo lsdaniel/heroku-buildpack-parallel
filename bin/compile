@@ -13,7 +13,7 @@ echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
 
 cd $BUILD_DIR
 mkdir -p $VENDOR_DIR/parallel
-curl -L --silent $DOWNLOAD_URL | tar x --strip-components=1
+curl -L --silent $DOWNLOAD_URL | tar xj --strip-components=1
 ./configure --prefix=$VENDOR_DIR/parallel | indent
 make | indent
 make install | indent
