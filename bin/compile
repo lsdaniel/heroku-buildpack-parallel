@@ -1,0 +1,25 @@
+#!/bin/sh
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+echo "-----> Install parallel"
+BUILD_DIR=$1
+VENDOR_DIR="vendor"
+DOWNLOAD_URL="http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2"
+
+echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
+
+cd $BUILD_DIR
+mkdir -p $VENDOR_DIR/parallel
+curl -L --silent $DOWNLOAD_URL | tar x --strip-components=1
+./configure --prefix=$VENDOR_DIR/parallel | indent
+make | indent
+make install | indent
+
+
+echo "exporting PATH" | indent
+PROFILE_PATH="$BUILD_DIR/.profile.d/parallel.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+echo 'export PATH="$PATH:${HOME}/vendor/parallel"' >> $PROFILE_PATH
